@@ -37,7 +37,7 @@ public class MazePointProvider {
                 int y = point.getInt(Y);
                 Point point1 = new Point(x, y);
                 this.pointList.add(point1);
-
+                System.out.println("x: " + x + ", y: " + y);
             }
 
         } catch (UnirestException e) {

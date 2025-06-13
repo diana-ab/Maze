@@ -5,38 +5,38 @@ import java.util.List;
 public class MazeSolver {
 
     private Set<Point> allowedPoints;
-    private Set<Point> vistedPoint;
+    private Set<Point> visitedPoints;
     private Map<Point, Point> previousStep;
     private int width;
     private int height;
+    private Point start;
+    private Point end;
 
 
     public MazeSolver(List<Point> allowedPoints, int width, int height) {
         this.allowedPoints = new HashSet<>(allowedPoints);
-        this.vistedPoint = new HashSet<>();
+        this.visitedPoints = new HashSet<>();
         this.previousStep = new HashMap<>();
         this.width = width;
         this.height = height;
+        this.start = new Point(0, 0);
+        this.end = new Point(width - 1, height - 1);
     }
 
     public List<Point> solve() {
-        Point start = new Point(this.width - this.width, this.height - this.height);
-        Point end = new Point(this.width - 1, this.height - 1);
 
-        if (!isValidStartAndEnd(start, end)) {
+        if (!isValidStartAndEnd(this.start, this.end)) {
             return null;
         }
-        this.exploreMaze(start, end);
+        this.exploreMaze(this.start, this.end);
 
-        return buildPath(end)
-
-
+        return buildPath(this.end);
     }
 
     private void exploreMaze(Point start, Point end) {
         Queue<Point> pointQueue = new LinkedList<>(); // תור FIFO מקורס מבני נתונים
         pointQueue.add(start);
-        this.vistedPoint.add(start);
+        this.visitedPoints.add(start);
         while (!pointQueue.isEmpty()) {
             Point current = pointQueue.poll();
 
@@ -45,9 +45,9 @@ public class MazeSolver {
             }
             List<Point> neighbors = getValidNeighbors(current);
             for (Point neighbor : neighbors) {
-                if (!ifVisited(neighbor)) {
+                if (!isVisited(neighbor)) {
                     pointQueue.add(neighbor);
-                    this.vistedPoint.add(neighbor);
+                    this.visitedPoints.add(neighbor);
                     this.previousStep.put(neighbor, current);
                 }
             }
@@ -72,12 +72,12 @@ public class MazeSolver {
         );
         for (Point dir : directions) {
             Point neighbor = new Point(current.x + dir.x, current.y + dir.y);
-            addNeighborsIfValid(neighbors, neighbor);
+            addIfValidNeighbor(neighbors, neighbor);
         }
         return neighbors;
     }
 
-    private void addNeighborsIfValid(List<Point> neighbors, Point point) {
+    private void addIfValidNeighbor(List<Point> neighbors, Point point) {
         if (isInBounds(point) && isPointAllowed(point)) {
             neighbors.add(point);
         }
@@ -91,8 +91,8 @@ public class MazeSolver {
         }
     }
 
-    private boolean ifVisited(Point point) {
-        if (this.vistedPoint.contains(point)) {
+    private boolean isVisited(Point point) {
+        if (this.visitedPoints.contains(point)) {
             return true;
         }
         return false;
@@ -109,7 +109,7 @@ public class MazeSolver {
         while (currentPoint != null) {
             path.addFirst(currentPoint);
             Point newCurrentPoint = this.previousStep.get(currentPoint);
-            currentPoint=newCurrentPoint;
+            currentPoint = newCurrentPoint;
         }
         return path;
     }

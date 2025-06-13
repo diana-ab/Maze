@@ -3,9 +3,8 @@ import java.awt.*;
 import java.util.List;
 
 public class MainFrame extends JFrame {
-    private static final int WINDOW_WIDTH = 514;
-    private static final int WINDOW_HEIGHT = 564;
-
+    //private static final int WINDOW_WIDTH = 514;
+    //private static final int WINDOW_HEIGHT = 564;
 
     private MazePanel mazePanel;
     private JButton checkButton;
@@ -15,15 +14,21 @@ public class MainFrame extends JFrame {
 
     public MainFrame() {
         this.setTitle("Maze Solver");
-        this.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.setLocationRelativeTo(null);
-        this.setResizable(false);
+        //this.setSize(WINDOW_WIDTH, WINDOW_HEIGHT); //<- מגדיר את גודל החלון באופן ידני
         this.setLayout(new BorderLayout());
+
         this.mazePanel = new MazePanel(MazePointProvider.WIDTH, MazePointProvider.HEIGHT);
         this.checkButton = new JButton("Check Solution");
+
         this.add(this.mazePanel, BorderLayout.CENTER);
         this.add(checkButton, BorderLayout.SOUTH);
+
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE); //  הגדרות כלליות שלא מושפעות מגודל החלון אבל מומלץ לקרוא לפני PACK כדי שהמערכת תחשב את הגודל האופטימלי בהיחשב בזה שהחלון לא ניתן לשינוי גודל
+        this.setResizable(false);
+        this.pack(); //חישוב גודל לפי תוכן -> צריך להיקרא אחרי שמוסיפים את הרכיבים לחלון כדי שיוכל לחשב את הגודל הנכון
+        this.setLocationRelativeTo(null); //מושפע מגודל -> קוראים אחרי
+        this.setVisible(true); //תמיד אחרון -> כבר אכלנו אותה עם הפילוסופים כשזה לא היה אחרון
+        // שונה מיקום של כל המתודות כי הPACK מושפע משאר העצמים בחלון ובנוסף כל המתודות שמושפעות מגודל החלון הועברו מתחתיו על מנת שיפעלו באופן תקין.
 
 
         this.checkButton.addActionListener(e -> {
@@ -47,9 +52,6 @@ public class MainFrame extends JFrame {
                 //JOptionPane.WARNING_MESSAGE - The icon type shown in the dialog: a yellow warning triangle.
             }
         });
-
-        this.setVisible(true);
-
     }
 }
 

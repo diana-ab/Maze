@@ -22,7 +22,6 @@ public class MazePointProvider {
     public MazePointProvider() {
         this.pointList = new ArrayList<>();
         this.fetchMazePointsFromAPI();
-
     }
 
     private void fetchMazePointsFromAPI() {
@@ -39,7 +38,6 @@ public class MazePointProvider {
                 this.pointList.add(point1);
                 System.out.println("x: " + x + ", y: " + y);
             }
-
         } catch (UnirestException e) {
             throw new RuntimeException(e);
         }

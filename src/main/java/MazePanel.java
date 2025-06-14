@@ -18,16 +18,13 @@ public class MazePanel extends JPanel {
         this.mazeImage = new MazeImageCreator(this.mazePointProvider);
         this.newMaze = this.mazeImage.getMazeImage();
     }
-
     public void setSolutionPath(List<Point> solutionPath) {
         this.solutionPath = solutionPath;
         repaint();
     }
-
     public MazePointProvider getMazePointProvider() {
         return mazePointProvider;
     }
-
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -37,7 +34,6 @@ public class MazePanel extends JPanel {
                 this.newMaze.getWidth() * SCALE_UP,
                 this.newMaze.getHeight() * SCALE_UP,
                 null);
-
         if (this.solutionPath != null) {
             g.setColor(Color.GREEN);
             for (Point point : this.solutionPath) {

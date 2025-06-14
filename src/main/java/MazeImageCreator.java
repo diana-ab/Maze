@@ -17,7 +17,6 @@ public class MazeImageCreator {
                 BufferedImage.TYPE_INT_RGB);
         this.drawMaze();
     }
-
     private boolean ifPointExists(Point point) {
         if (this.pointList.contains(point)) {
             return true;
@@ -25,7 +24,6 @@ public class MazeImageCreator {
             return false;
         }
     }
-
     private void drawMaze() {
         for (int x = 0; x < this.mazeImage.getWidth(); x++) {
             for (int y = 0; y < mazeImage.getHeight(); y++) {

@@ -24,12 +24,10 @@ public class MazeSolver {
     }
 
     public List<Point> solve() {
-
         if (!isValidStartAndEnd(this.start, this.end)) {
             return null;
         }
         this.exploreMaze(this.start, this.end);
-
         return buildPath(this.end);
     }
 
@@ -39,7 +37,6 @@ public class MazeSolver {
         this.visitedPoints.add(start);
         while (!pointQueue.isEmpty()) {
             Point current = pointQueue.poll();
-
             if (current.equals(end)) {
                 break;
             }
@@ -63,7 +60,7 @@ public class MazeSolver {
     }
 
     private List<Point> getValidNeighbors(Point current) {
-        List<Point> neighbors = new ArrayList<>();// פה הוא יקבל רשימה של השכנים
+        List<Point> neighbors = new ArrayList<>();
         List<Point> directions = List.of(
                 new Point(1, 0),  // right
                 new Point(-1, 0), // left
@@ -102,10 +99,8 @@ public class MazeSolver {
         if (!this.previousStep.containsKey(end)) {
             return null;
         }
-
         List<Point> path = new LinkedList<>();
         Point currentPoint = end;
-
         while (currentPoint != null) {
             path.addFirst(currentPoint);
             Point newCurrentPoint = this.previousStep.get(currentPoint);
